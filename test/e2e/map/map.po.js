@@ -3,10 +3,10 @@ var MapPage = function() {
   var LOCALHOST = 'http://localhost:9000/#';
 
   this.mapCanvas = {};
-
-  this.get = function () {
-    browser.get(LOCALHOST);
-  }
+  this.form = element(by.tagName('form'));
+  this.address = this.form.element(by.model('map.address'));
+  this.submitButton = this.form.element(by.tagName('button'));
+  this.geocodeError = this.form.element(by.tagName('span'));
 
   function ElementPromise (selector) {
     var deferred = protractor.promise.defer();
@@ -49,6 +49,10 @@ var MapPage = function() {
       var countPromise = new CountPromise(map);
       countPromise.then(callback);
     });
+  }
+
+  this.get = function () {
+    browser.get(LOCALHOST);
   }
 };
 

@@ -9,7 +9,8 @@ describe('Controller: MapCtrl', function () {
 
   var mapService = {
     GeocoderStatus: {
-      OK: true
+      OK: true,
+      ERROR: false
     },
     Geocoder: function () {
       this.geocode = function () {};
@@ -65,6 +66,20 @@ describe('Controller: MapCtrl', function () {
     expect(mapService.Marker).toHaveBeenCalledWith({
       map: mapCtrl.map,
       position: geocoderResults[0].geometry.location
+    });
+  });
+
+  describe('geocodeError', function() {
+    it('should be set to true if the geocoder fails', function () {
+      mapCtrl.geocodeError = false;
+      mapCtrl.parseGeocodeResults(geocoderResults, mapService.GeocoderStatus.ERROR);
+      expect(mapCtrl.geocodeError).toBeTruthy();
+    });
+
+    it('should be set to false if the geocoder succeeds', function () {
+      mapCtrl.geocodeError = true;
+      mapCtrl.parseGeocodeResults(geocoderResults, mapService.GeocoderStatus.OK);
+      expect(mapCtrl.geocodeError).toBeFalsy();
     });
   });
 });

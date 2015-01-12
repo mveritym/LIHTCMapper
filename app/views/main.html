@@ -2,10 +2,10 @@
   <h1>Mapping Site Amenities: A Tool for Affordable Housing Developers in Los Angeles</h1>
   <h2>Analyzing Site Feasibility for the California Tax Credit Allocation Committee (TCAC) Application</h2>
 </section>
-<section ng-controller="MapCtrl as map">
-  <form>
-    Address: <input type="text" ng-model="map.address"></input>
-    <button type="submit" ng-click="map.codeAddress(map.address);">locate</button>
-  </form>
-  <div id="map-canvas"></div>
+<form ng-controller="MapCtrl as map" ng-submit="map.codeAddress(map.address)">
+  Address: <input type="text" ng-model="map.address"></input>
+  <button type="submit">locate</button>
+  <span id="error-message" ng-show="map.geocodeError">Sorry, we could not find that address. Please search for a new location.</span>
+</form>
+<div id="map-canvas"></div>
 </section>
