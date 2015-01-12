@@ -2,14 +2,35 @@
 
 describe('Controller: MapCtrl', function () {
 
-  var mapCtrl, mapService;
+  var mapCtrl;
+  var lat = 123;
+  var lng = 456;
+  var zoom = 12;
 
-  mapService = {
+  var mapService = {
+    GeocoderStatus: {
+      OK: true
+    },
     Geocoder: function () {
       this.geocode = function () {};
     },
-    Map: function () {}
+    LatLng: function () {},
+    Map: function () {
+      return {
+        setCenter: function () {}
+      };
+    },
+    Marker: function () {}
   };
+
+  var geocoderResults = [{
+    geometry: {
+      location: {
+        lat: function() { return lat; },
+        lng: function() { return lng; }
+      }
+    }
+  }];
 
   beforeEach(module('lihtcmapperApp'));
 
@@ -25,10 +46,6 @@ describe('Controller: MapCtrl', function () {
   }));
 
   it('should initialize the google maps api and create a map', function () {
-    var lat = 123;
-    var lng = 456;
-    var zoom = 12;
-
     mapCtrl.initialize(lat, lng, zoom);
 
     expect(mapCtrl.mapOptions.center.lat).toEqual(lat);
@@ -36,8 +53,18 @@ describe('Controller: MapCtrl', function () {
     expect(mapCtrl.mapOptions.zoom).toEqual(zoom);
   });
 
-  it('should center an input location on the map', function () {
-    var fakeAddress = '123 Fake Street';
-    mapCtrl.codeAddress(fakeAddress);
+  it('should center an input location on the map when the geocoder returns successfully', function () {
+    spyOn(mapService, 'LatLng');
+    spyOn(mapCtrl.map, 'setCenter');
+    spyOn(mapService, 'Marker');
+
+    mapCtrl.parseGeocodeResults(geocoderResults, mapService.GeocoderStatus.OK);
+
+    expect(mapService.LatLng).toHaveBeenCalledWith(lat, lng);
+    expect(mapCtrl.map.setCenter).toHaveBeenCalledWith(new mapService.LatLng());
+    expect(mapService.Marker).toHaveBeenCalledWith({
+      map: mapCtrl.map,
+      position: geocoderResults[0].geometry.location
+    });
   });
 });

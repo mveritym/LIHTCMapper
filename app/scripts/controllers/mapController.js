@@ -8,25 +8,27 @@ angular.module('lihtcmapperApp')
     this.map = {};
     this.geocoder = {};
 
-    var mapCtrl = this;
-
     var OAK_CITY_HALL_LAT = 37.8052754;
     var OAK_CITY_HALL_LNG = -122.2725614;
     var DEFAULT_ZOOM = 12;
 
+    var mapCtrl = this;
+
+    this.parseGeocodeResults = function (results, status) {
+      if (status === mapService.GeocoderStatus.OK) {
+        var location = results[0].geometry.location;
+        mapCtrl.map.setCenter(new mapService.LatLng(location.lat(), location.lng()));
+        new mapService.Marker({
+          map: mapCtrl.map,
+          position: results[0].geometry.location
+        });
+      } else {
+        console.log('Geocode was not successful for the following reason: ' + status);
+      }
+    };
+
     this.codeAddress = function (address) {
-      mapCtrl.geocoder.geocode( { 'address': address}, function(results, status) {
-        if (status === mapService.GeocoderStatus.OK) {
-          var location = results[0].geometry.location;
-          mapCtrl.map.setCenter(new mapService.LatLng(location.lat(), location.lng()));
-          new mapService.Marker({
-            map: mapCtrl.map,
-            position: results[0].geometry.location
-          });
-        } else {
-          console.log('Geocode was not successful for the following reason: ' + status);
-        }
-      });
+      this.geocoder.geocode( {'address': address}, this.parseGeocodeResults);
     };
 
     this.initialize = function (lat, lng, zoom) {
