@@ -1,0 +1,21 @@
+@import "compass/css3";
+
+#header {
+
+  text-align: center;
+  font-family: Calibri, sans-serif;
+  color: #004937;
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+}
+
+#map-canvas {
+  height: 500px;
+  width: 100%;
+}
