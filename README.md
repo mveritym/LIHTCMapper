@@ -83,7 +83,13 @@ To run your unit tests:
 grunt karma
 ```
 
-To run all tests including your functional tests:
+To run your functional tests:
+
+```
+grunt protractor:run
+```
+
+To run all tests:
 
 ```
 grunt test
