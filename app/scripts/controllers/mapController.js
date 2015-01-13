@@ -8,7 +8,7 @@ angular.module('lihtcmapperApp')
     this.map = {};
     this.geocoder = {};
     this.geocodeError = false;
-    this.location = {};
+    this.marker = {};
 
     var OAK_CITY_HALL_LAT = 37.8052754;
     var OAK_CITY_HALL_LNG = -122.2725614;
@@ -19,14 +19,17 @@ angular.module('lihtcmapperApp')
     this.parseGeocodeResults = function (results, status) {
       if (status === mapService.GeocoderStatus.OK) {
         mapCtrl.geocodeError = false;
-        var location = results[0].geometry.location;
-        mapCtrl.map.setCenter(new mapService.LatLng(location.lat(), location.lng()));
-        new mapService.Marker({
+        var latLng = new mapService.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+        mapCtrl.map.setCenter(latLng);
+
+        mapCtrl.marker.setMap(null);
+        mapCtrl.marker = new mapService.Marker({
           map: mapCtrl.map,
-          position: results[0].geometry.location
+          position: latLng
         });
       } else {
         mapCtrl.geocodeError = true;
+        mapCtrl.marker.setMap(null);
       }
       $scope.$digest();
     };
@@ -44,7 +47,7 @@ angular.module('lihtcmapperApp')
       };
       this.geocoder = new mapService.Geocoder();
       this.map = new mapService.Map(canvas, this.mapOptions);
-      this.location = new mapService.Marker({
+      this.marker = new mapService.Marker({
         position: { lat: lat, lng: lng }
       });
     };

@@ -13,15 +13,19 @@ describe('Controller: MapCtrl', function () {
       ERROR: false
     },
     Geocoder: function () {
-      this.geocode = function () {};
+      this.geocode = function (){};
     },
-    LatLng: function () {},
+    LatLng: function(){},
     Map: function () {
       return {
-        setCenter: function () {}
+        setCenter: function(){}
       };
     },
-    Marker: function () {}
+    Marker: function () {
+      return {
+        setMap: function(){}
+      };
+    }
   };
 
   var geocoderResults = [{
@@ -65,14 +69,24 @@ describe('Controller: MapCtrl', function () {
     expect(mapCtrl.map.setCenter).toHaveBeenCalledWith(new mapService.LatLng());
     expect(mapService.Marker).toHaveBeenCalledWith({
       map: mapCtrl.map,
-      position: geocoderResults[0].geometry.location
+      position: new mapService.LatLng(geocoderResults[0].geometry.location.lat(), geocoderResults[0].geometry.location.lng())
     });
   });
 
   describe('location marker', function() {
-    it('should be created with a default position when the page loads', function () {
-      spyOn(mapService, 'Marker');
+    beforeEach(function () {
       mapCtrl.initialize(lat, lng, zoom);
+    });
+
+    it('should be removed from the map if it\'s there and the geocoder fails', function () {
+      spyOn(mapCtrl.marker, 'setMap');
+      mapCtrl.parseGeocodeResults(geocoderResults, mapService.GeocoderStatus.ERROR);
+      expect(mapCtrl.marker.setMap).toHaveBeenCalledWith(null);
+    });
+
+    it('should be updated to the new location when the geocoder succeeds', function () {
+      spyOn(mapService, 'Marker');
+      mapCtrl.parseGeocodeResults(geocoderResults, mapService.GeocoderStatus.OK);
       expect(mapService.Marker).toHaveBeenCalled();
     });
   });
