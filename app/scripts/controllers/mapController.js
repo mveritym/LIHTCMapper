@@ -8,6 +8,7 @@ angular.module('lihtcmapperApp')
     this.map = {};
     this.geocoder = {};
     this.geocodeError = false;
+    this.location = {};
 
     var OAK_CITY_HALL_LAT = 37.8052754;
     var OAK_CITY_HALL_LNG = -122.2725614;
@@ -36,12 +37,16 @@ angular.module('lihtcmapperApp')
 
     this.initialize = function (lat, lng, zoom) {
       var canvas = document.getElementById('map-canvas');
+      var defaultCenter = { lat: lat, lng: lng };
       this.mapOptions = {
-        center: { lat: lat, lng: lng },
+        center: defaultCenter,
         zoom: zoom
       };
       this.geocoder = new mapService.Geocoder();
       this.map = new mapService.Map(canvas, this.mapOptions);
+      this.location = new mapService.Marker({
+        position: { lat: lat, lng: lng }
+      });
     };
 
     this.initialize(OAK_CITY_HALL_LAT, OAK_CITY_HALL_LNG, DEFAULT_ZOOM);

@@ -69,6 +69,14 @@ describe('Controller: MapCtrl', function () {
     });
   });
 
+  describe('location marker', function() {
+    it('should be created with a default position when the page loads', function () {
+      spyOn(mapService, 'Marker');
+      mapCtrl.initialize(lat, lng, zoom);
+      expect(mapService.Marker).toHaveBeenCalled();
+    });
+  });
+
   describe('geocodeError', function() {
     it('should be set to true if the geocoder fails', function () {
       mapCtrl.geocodeError = false;
