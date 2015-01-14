@@ -16,7 +16,6 @@ angular.module('lihtcmapperApp').service('MapService', function () {
   this.setMapCenter = function (lat, lng) {
     var newLocation = new gmaps.LatLng(lat, lng);
     map.setCenter(newLocation);
-    // updateBoundaryOnMap(newLocation);
   };
 
   this.clearMap = function () {
@@ -30,16 +29,20 @@ angular.module('lihtcmapperApp').service('MapService', function () {
   this.geocode = function (address, callback) {
     var mapService = this;
     geocoder.geocode({'address': address}, function (results, status) {
-      if (status === gmaps.GeocoderStatus.OK) {
-        var location = results[0].geometry.location;
-        mapService.setMapCenter(location.lat(), location.lng());
-        mapService.updateMarkerPosition(location.lat(), location.lng());
-        mapService.placeOnMap();
-      } else {
-        mapService.clearMap();
-      }
+      mapService.parseGeocodeResults(results, status);
       callback(status === gmaps.GeocoderStatus.OK);
     });
+  };
+
+  this.parseGeocodeResults = function (results, status) {
+    if (status === gmaps.GeocoderStatus.OK) {
+      var location = results[0].geometry.location;
+      this.setMapCenter(location.lat(), location.lng());
+      this.updateMarkerPosition(location.lat(), location.lng());
+      this.placeOnMap();
+    } else {
+      this.clearMap();
+    }
   };
 
   this.placeOnMap = function () {
