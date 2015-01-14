@@ -1,21 +1,58 @@
 @import "compass/css3";
 
-#header {
 
-  text-align: center;
-  font-family: Calibri, sans-serif;
-  color: #004937;
+  #header {
 
-  h1 {
-    font-size: 30px;
+    width: 100%;
+    margin-bottom: 40px;
+    text-align: center;
+    font-family: Calibri, sans-serif;
+    color: #004937;
+
+    h1 {
+      margin-bottom: 0px;
+      font-size: 30px;
+    }
+
+    h2 {
+      margin-top: 10px;
+      font-size: 22px;
+      font-style: italic;
+    }
   }
 
-  h2 {
-    font-size: 22px;
-  }
-}
+  #body {
 
-#map-canvas {
-  height: 500px;
-  width: 100%;
-}
+    width: 90%;
+    margin: auto;
+
+    #map-canvas {
+      float: right;
+      height: 550px;
+      width: 62%;
+    }
+
+    form {
+      width: 35%;
+      padding: 15px;
+
+      div {
+        input {
+          width: 65%;
+          padding: 5px 10px 5px 10px;
+          font-size: 16px;
+        }
+
+        button {
+          margin-left: 5px;
+          padding: 5px 15px 5px 15px;
+          font-size: 14px;
+        }
+      }
+
+      #error-message {
+        padding: 10px;
+        color: red;
+      }
+    }
+  }

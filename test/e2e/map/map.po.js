@@ -6,7 +6,7 @@ var MapPage = function() {
   this.form = element(by.tagName('form'));
   this.address = this.form.element(by.model('map.address'));
   this.submitButton = this.form.element(by.tagName('button'));
-  this.geocodeError = this.form.element(by.tagName('span'));
+  this.geocodeError = this.form.element(by.id('error-message'));
 
   function ElementPromise (selector) {
     var deferred = protractor.promise.defer();
