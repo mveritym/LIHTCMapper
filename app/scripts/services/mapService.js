@@ -3,13 +3,14 @@
 
 angular.module('lihtcmapperApp').service('MapService', function () {
 
-  var gmaps, geocoder, map, marker;
+  var gmaps, geocoder, map, marker, rangeIndicator;
 
   this.initializeMap = function (canvas, mapOptions) {
     gmaps = this.api();
     map = new gmaps.Map(canvas, mapOptions);
     geocoder = new gmaps.Geocoder();
     marker = new gmaps.Marker();
+    rangeIndicator = new gmaps.Circle();
     marker.setMap(map);
   };
 
@@ -46,8 +47,9 @@ angular.module('lihtcmapperApp').service('MapService', function () {
   };
 
   this.placeOnMap = function () {
-    if (marker.getMap() === null) {
+    if (marker.getMap() === null && rangeIndicator.getMap() === null) {
       marker.setMap(map);
+      rangeIndicator.setMap(map);
     }
   };
 
@@ -67,5 +69,9 @@ angular.module('lihtcmapperApp').service('MapService', function () {
 
   this.getMarker = function () {
     return marker;
+  };
+
+  this.getRangeIndicator = function () {
+    return rangeIndicator;
   };
 });
