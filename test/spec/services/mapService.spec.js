@@ -68,7 +68,8 @@ describe('MapService', function() {
     it('should geocode an address', function () {
       spyOn(mapService.getGeocoder(), 'geocode');
       var fakeAddress = '123 Main Street';
-      mapService.geocode(fakeAddress);
+      var callback = function () {};
+      mapService.geocode(fakeAddress, callback);
       expect(mapService.getGeocoder().geocode).toHaveBeenCalled();
     });
 
@@ -86,6 +87,11 @@ describe('MapService', function() {
       spyOn(mapService.getMarker(), 'setMap');
       mapService.clearMap();
       expect(mapService.getMarker().setMap).toHaveBeenCalledWith(null);
+    });
+
+    it('should put the marker on the map', function () {
+      mapService.placeOnMap();
+      expect(mapService.getMarker().getMap()).not.toEqual(null);
     });
 
     it('should update the location marker', function () {

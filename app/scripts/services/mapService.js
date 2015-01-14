@@ -27,27 +27,32 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     marker.setPosition({ lat: lat, lng: lng });
   };
 
-  this.geocode = function (address) {
-    var geocoderStatus;
+  this.geocode = function (address, callback) {
     var mapService = this;
     geocoder.geocode({'address': address}, function (results, status) {
       if (status === gmaps.GeocoderStatus.OK) {
         var location = results[0].geometry.location;
         mapService.setMapCenter(location.lat(), location.lng());
         mapService.updateMarkerPosition(location.lat(), location.lng());
+        mapService.placeOnMap();
       } else {
         mapService.clearMap();
       }
-      geocoderStatus = status;
+      callback(status === gmaps.GeocoderStatus.OK);
     });
-    return geocoderStatus != gmaps.GeocoderStatus.OK;
+  };
+
+  this.placeOnMap = function () {
+    if (marker.getMap() === null) {
+      marker.setMap(map);
+    }
   };
 
   this.api = function () {
     return google.maps;
   };
 
-  // Getters - refactor later??
+  // Getters & Setters - refactor later??
 
   this.getGeocoder = function () {
     return geocoder;

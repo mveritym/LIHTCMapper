@@ -11,7 +11,8 @@ describe('Controller: MapCtrl', function () {
 
   var mapService = {
     initializeMap: function () {},
-    geocode: function () {}
+    geocode: function () {},
+    isGeocodeError: function () {}
   };
 
   beforeEach(module('lihtcmapperApp'));
@@ -33,11 +34,11 @@ describe('Controller: MapCtrl', function () {
     });
   });
 
-  it('should geocode an address', function () {
+  it('should geocode an address and set the geocode error to true', function () {
     spyOn(mapService, 'geocode').and.returnValue(true);
+    spyOn(mapService, 'isGeocodeError').and.returnValue(true);
     var fakeAddress = '123 Main Street';
     mapCtrl.codeAddress(fakeAddress);
-    expect(mapService.geocode).toHaveBeenCalledWith(fakeAddress);
-    expect(mapCtrl.geocodeError).toBeTruthy();
+    expect(mapService.geocode).toHaveBeenCalled();
   });
 });
