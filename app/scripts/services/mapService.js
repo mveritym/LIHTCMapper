@@ -3,15 +3,15 @@
 
 angular.module('lihtcmapperApp').service('MapService', function () {
 
-  var gmaps, geocoder, map, marker, rangeIndicator;
+  var gmaps, geocoder, map, marker, rangeCircle;
 
-  this.initializeMap = function (canvas, mapOptions) {
+  this.initializeMap = function (canvas, mapOptions, rangeCircleOptions) {
     gmaps = this.api();
     map = new gmaps.Map(canvas, mapOptions);
     geocoder = new gmaps.Geocoder();
     marker = new gmaps.Marker();
-    rangeIndicator = new gmaps.Circle();
-    marker.setMap(map);
+    rangeCircle = new gmaps.Circle(rangeCircleOptions);
+    this.placeOnMap();
   };
 
   this.setMapCenter = function (lat, lng) {
@@ -23,7 +23,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     marker.setMap(null);
   };
 
-  this.updateMarkerPosition = function (lat, lng) {
+  this.setMarkerPosition = function (lat, lng) {
     marker.setPosition({ lat: lat, lng: lng });
   };
 
@@ -39,7 +39,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     if (status === gmaps.GeocoderStatus.OK) {
       var location = results[0].geometry.location;
       this.setMapCenter(location.lat(), location.lng());
-      this.updateMarkerPosition(location.lat(), location.lng());
+      this.setMarkerPosition(location.lat(), location.lng());
       this.placeOnMap();
     } else {
       this.clearMap();
@@ -47,9 +47,9 @@ angular.module('lihtcmapperApp').service('MapService', function () {
   };
 
   this.placeOnMap = function () {
-    if (marker.getMap() === null && rangeIndicator.getMap() === null) {
+    if (marker.getMap() === null && rangeCircle.getMap() === null) {
       marker.setMap(map);
-      rangeIndicator.setMap(map);
+      rangeCircle.setMap(map);
     }
   };
 
@@ -71,7 +71,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     return marker;
   };
 
-  this.getRangeIndicator = function () {
-    return rangeIndicator;
+  this.getrangeCircle = function () {
+    return rangeCircle;
   };
 });

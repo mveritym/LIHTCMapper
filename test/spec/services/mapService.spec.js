@@ -5,7 +5,8 @@ describe('MapService', function() {
   var markerMap = null, circleMap = null, mapService = {};
 
   var canvas = angular.element('<div></div>');
-  var options = { center: { lat: 123, lng: 456 }, zoom: 12 };
+  var mapOptions = { center: { lat: 123, lng: 456 }, zoom: 12 };
+  var rangeCircleOptions = { radius: 1609.34 * 0.5 }; // 0.5 miles in meters
 
   var emptyFn = function () {};
 
@@ -15,8 +16,9 @@ describe('MapService', function() {
   var getCircleMapFn = function () { return circleMap; };
 
   var fakeGmaps = {
-    Map: function () {
+    Map: function (options) {
       return {
+        options: options,
         setCenter: emptyFn
       };
     },
@@ -32,8 +34,9 @@ describe('MapService', function() {
         setPosition: emptyFn
       };
     },
-    Circle: function () {
+    Circle: function (options) {
       return {
+        options: options,
         setMap: setCircleMapFn,
         getMap: getCircleMapFn
       };
@@ -50,24 +53,23 @@ describe('MapService', function() {
     spyOn(mapService, 'api').and.returnValue(fakeGmaps);
   });
 
-  it('should use the google maps api to initialize a new map, geocoder, marker, and rangeIndicator', function () {
-    mapService.initializeMap(canvas, options);
+  it('should use the google maps api to initialize a new map, geocoder, marker, and rangeCircle', function () {
+    spyOn(mapService, 'placeOnMap');
+    mapService.initializeMap(canvas, mapOptions, rangeCircleOptions);
 
     expect(mapService.api).toHaveBeenCalled();
-    expect(mapService.getMap()).toEqual(new fakeGmaps.Map(canvas, options));
+    expect(mapService.placeOnMap).toHaveBeenCalled();
+
+    expect(mapService.getMap()).toEqual(new fakeGmaps.Map(canvas, mapOptions));
     expect(mapService.getGeocoder()).toEqual(new fakeGmaps.Geocoder());
     expect(mapService.getMarker()).toEqual(new fakeGmaps.Marker());
-    expect(mapService.getRangeIndicator()).toEqual(new fakeGmaps.Circle());
-
-    var markerMap = mapService.getMarker().getMap();
-    var map = mapService.getMap();
-    expect(markerMap).toEqual(map);
+    expect(mapService.getrangeCircle()).toEqual(new fakeGmaps.Circle(rangeCircleOptions));
   });
 
   describe('after a map has been initialized', function () {
 
     beforeEach(function() {
-      mapService.initializeMap(canvas, options);
+      mapService.initializeMap(canvas, mapOptions, rangeCircleOptions);
     });
 
     describe('the geocoder', function () {
@@ -91,13 +93,13 @@ describe('MapService', function() {
         }}}];
 
         spyOn(mapService, 'setMapCenter');
-        spyOn(mapService, 'updateMarkerPosition');
+        spyOn(mapService, 'setMarkerPosition');
         spyOn(mapService, 'placeOnMap');
 
         mapService.parseGeocodeResults(results, status);
 
         expect(mapService.setMapCenter).toHaveBeenCalledWith(fakeLatFn(), fakeLngFn());
-        expect(mapService.updateMarkerPosition).toHaveBeenCalledWith(fakeLatFn(), fakeLngFn());
+        expect(mapService.setMarkerPosition).toHaveBeenCalledWith(fakeLatFn(), fakeLngFn());
         expect(mapService.placeOnMap).toHaveBeenCalled();
       });
 
@@ -130,32 +132,32 @@ describe('MapService', function() {
 
       it('should put the marker and the radius circle on the map if both are null', function () {
         mapService.getMarker().setMap(null);
-        mapService.getRangeIndicator().setMap(null);
+        mapService.getrangeCircle().setMap(null);
 
         spyOn(mapService.getMarker(), 'setMap');
-        spyOn(mapService.getRangeIndicator(), 'setMap');
+        spyOn(mapService.getrangeCircle(), 'setMap');
 
         mapService.placeOnMap();
 
         expect(mapService.getMarker().setMap).toHaveBeenCalledWith(mapService.getMap());
-        expect(mapService.getRangeIndicator().setMap).toHaveBeenCalledWith(mapService.getMap());
+        expect(mapService.getrangeCircle().setMap).toHaveBeenCalledWith(mapService.getMap());
       });
 
       it('should not put the marker and the radius circle on the map if they are already set', function () {
         spyOn(mapService.getMarker(), 'setMap');
-        spyOn(mapService.getRangeIndicator(), 'setMap');
+        spyOn(mapService.getrangeCircle(), 'setMap');
 
         mapService.placeOnMap();
 
         expect(mapService.getMarker().setMap).not.toHaveBeenCalled();
-        expect(mapService.getRangeIndicator().setMap).not.toHaveBeenCalled();
+        expect(mapService.getrangeCircle().setMap).not.toHaveBeenCalled();
       });
 
       it('should update the location marker', function () {
         var newLat = 123;
         var newLng = 456;
         spyOn(mapService.getMarker(), 'setPosition');
-        mapService.updateMarkerPosition(newLat, newLng);
+        mapService.setMarkerPosition(newLat, newLng);
         expect(mapService.getMarker().setPosition).toHaveBeenCalledWith({ lat: newLat, lng: newLng });
       });
     });

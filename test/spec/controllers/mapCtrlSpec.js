@@ -8,6 +8,7 @@ describe('Controller: MapCtrl', function () {
   var lat = 123;
   var lng = 456;
   var zoom = 12;
+  var radius = 1609.34 * 0.5; // 0.5 miles in meters
 
   var mapService = {
     initializeMap: function () {},
@@ -27,11 +28,10 @@ describe('Controller: MapCtrl', function () {
 
   it('should initialize a new map', function () {
     spyOn(mapService, 'initializeMap');
-    mapCtrl.initialize(canvas, lat, lng, zoom);
-    expect(mapService.initializeMap).toHaveBeenCalledWith(canvas, {
-      center: { lat: lat, lng: lng },
-      zoom: zoom
-    });
+    mapCtrl.initialize(canvas, lat, lng, zoom, radius);
+    expect(mapService.initializeMap).toHaveBeenCalledWith(canvas,
+      { center: { lat: lat, lng: lng }, zoom: zoom },
+      { radius: radius });
   });
 
   it('should geocode an address and set the geocode error to true', function () {
