@@ -1,6 +1,6 @@
 var MapPage = function() {
 
-  var LOCALHOST = 'http://localhost:9000/#';
+  var LOCALHOST = '#';
 
   this.mapCanvas = {};
   this.form = element(by.tagName('form'));
