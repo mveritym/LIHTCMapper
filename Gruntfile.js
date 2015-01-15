@@ -415,7 +415,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'newer:jshint',
-    'karma',
+    'karma:unit:run',
     'protractor:run'
   ]);
 
