@@ -54,10 +54,12 @@ describe('MapService', function() {
   });
 
   it('should use the google maps api to initialize a new map, geocoder, marker, and rangeCircle', function () {
+    spyOn(mapService, 'clearMap');
     spyOn(mapService, 'placeOnMap');
     mapService.initializeMap(canvas, mapOptions, rangeCircleOptions);
 
     expect(mapService.api).toHaveBeenCalled();
+    expect(mapService.clearMap).toHaveBeenCalled();
     expect(mapService.placeOnMap).toHaveBeenCalled();
 
     expect(mapService.getMap()).toEqual(new fakeGmaps.Map(canvas, mapOptions));
