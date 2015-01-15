@@ -63,7 +63,7 @@ describe('MapService', function() {
     expect(mapService.getMap()).toEqual(new fakeGmaps.Map(canvas, mapOptions));
     expect(mapService.getGeocoder()).toEqual(new fakeGmaps.Geocoder());
     expect(mapService.getMarker()).toEqual(new fakeGmaps.Marker());
-    expect(mapService.getrangeCircle()).toEqual(new fakeGmaps.Circle(rangeCircleOptions));
+    expect(mapService.getRangeCircle()).toEqual(new fakeGmaps.Circle(rangeCircleOptions));
   });
 
   describe('after a map has been initialized', function () {
@@ -124,33 +124,35 @@ describe('MapService', function() {
         expect(mapService.getMap().setCenter).toHaveBeenCalledWith(new fakeGmaps.LatLng(newLat, newLng));
       });
 
-      it('should clear the map', function () {
+      it('should clear the map of the marker and the rangeCircle', function () {
         spyOn(mapService.getMarker(), 'setMap');
+        spyOn(mapService.getRangeCircle(), 'setMap');
         mapService.clearMap();
         expect(mapService.getMarker().setMap).toHaveBeenCalledWith(null);
+        expect(mapService.getRangeCircle().setMap).toHaveBeenCalledWith(null);
       });
 
       it('should put the marker and the radius circle on the map if both are null', function () {
         mapService.getMarker().setMap(null);
-        mapService.getrangeCircle().setMap(null);
+        mapService.getRangeCircle().setMap(null);
 
         spyOn(mapService.getMarker(), 'setMap');
-        spyOn(mapService.getrangeCircle(), 'setMap');
+        spyOn(mapService.getRangeCircle(), 'setMap');
 
         mapService.placeOnMap();
 
         expect(mapService.getMarker().setMap).toHaveBeenCalledWith(mapService.getMap());
-        expect(mapService.getrangeCircle().setMap).toHaveBeenCalledWith(mapService.getMap());
+        expect(mapService.getRangeCircle().setMap).toHaveBeenCalledWith(mapService.getMap());
       });
 
       it('should not put the marker and the radius circle on the map if they are already set', function () {
         spyOn(mapService.getMarker(), 'setMap');
-        spyOn(mapService.getrangeCircle(), 'setMap');
+        spyOn(mapService.getRangeCircle(), 'setMap');
 
         mapService.placeOnMap();
 
         expect(mapService.getMarker().setMap).not.toHaveBeenCalled();
-        expect(mapService.getrangeCircle().setMap).not.toHaveBeenCalled();
+        expect(mapService.getRangeCircle().setMap).not.toHaveBeenCalled();
       });
 
       it('should update the location marker', function () {

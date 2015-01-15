@@ -11,6 +11,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     geocoder = new gmaps.Geocoder();
     marker = new gmaps.Marker();
     rangeCircle = new gmaps.Circle(rangeCircleOptions);
+    this.clearMap();
     this.placeOnMap();
   };
 
@@ -21,6 +22,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
 
   this.clearMap = function () {
     marker.setMap(null);
+    rangeCircle.setMap(null);
   };
 
   this.setMarkerPosition = function (lat, lng) {
@@ -71,7 +73,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     return marker;
   };
 
-  this.getrangeCircle = function () {
+  this.getRangeCircle = function () {
     return rangeCircle;
   };
 });
