@@ -38,7 +38,8 @@ describe('MapService', function() {
       return {
         options: options,
         setMap: setCircleMapFn,
-        getMap: getCircleMapFn
+        getMap: getCircleMapFn,
+        setCenter: emptyFn
       };
     },
     GeocoderStatus: {
@@ -84,7 +85,7 @@ describe('MapService', function() {
         expect(mapService.getGeocoder().geocode).toHaveBeenCalled();
       });
 
-      it('should update the map center and the marker\'s position if the geocoder succeeds', function () {
+      it('should update the map, marker, and rangeCircle if the geocoder succeeds', function () {
         var fakeLatFn = function () { return 'fakeLat'; };
         var fakeLngFn = function () { return 'fakeLng'; };
 
@@ -96,12 +97,14 @@ describe('MapService', function() {
 
         spyOn(mapService, 'setMapCenter');
         spyOn(mapService, 'setMarkerPosition');
+        spyOn(mapService, 'setRangeCirclePosition');
         spyOn(mapService, 'placeOnMap');
 
         mapService.parseGeocodeResults(results, status);
 
         expect(mapService.setMapCenter).toHaveBeenCalledWith(fakeLatFn(), fakeLngFn());
         expect(mapService.setMarkerPosition).toHaveBeenCalledWith(fakeLatFn(), fakeLngFn());
+        expect(mapService.setRangeCirclePosition).toHaveBeenCalledWith(fakeLatFn(), fakeLngFn());
         expect(mapService.placeOnMap).toHaveBeenCalled();
       });
 
@@ -157,12 +160,20 @@ describe('MapService', function() {
         expect(mapService.getRangeCircle().setMap).not.toHaveBeenCalled();
       });
 
-      it('should update the location marker', function () {
+      it('should set the location marker\'s position', function () {
         var newLat = 123;
         var newLng = 456;
         spyOn(mapService.getMarker(), 'setPosition');
         mapService.setMarkerPosition(newLat, newLng);
         expect(mapService.getMarker().setPosition).toHaveBeenCalledWith({ lat: newLat, lng: newLng });
+      });
+
+      it('should set the range circle\'s position', function () {
+        var newLat = 123;
+        var newLng = 456;
+        spyOn(mapService.getRangeCircle(), 'setCenter');
+        mapService.setRangeCirclePosition(newLat, newLng);
+        expect(mapService.getRangeCircle().setCenter).toHaveBeenCalledWith({ lat: newLat, lng: newLng });
       });
     });
   });

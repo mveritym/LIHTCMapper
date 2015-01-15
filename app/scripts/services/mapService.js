@@ -29,6 +29,10 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     marker.setPosition({ lat: lat, lng: lng });
   };
 
+  this.setRangeCirclePosition = function (lat, lng) {
+    rangeCircle.setCenter({ lat: lat, lng: lng });
+  };
+
   this.geocode = function (address, callback) {
     var mapService = this;
     geocoder.geocode({'address': address}, function (results, status) {
@@ -42,6 +46,7 @@ angular.module('lihtcmapperApp').service('MapService', function () {
       var location = results[0].geometry.location;
       this.setMapCenter(location.lat(), location.lng());
       this.setMarkerPosition(location.lat(), location.lng());
+      this.setRangeCirclePosition(location.lat(), location.lng());
       this.placeOnMap();
     } else {
       this.clearMap();
