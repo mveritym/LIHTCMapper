@@ -4,6 +4,10 @@ LIHTCMapper
 LIHTCMapper calculates the maximum tax credits a potential site could recieve if developed as a low income housing 
 property.
 
+## Story Wall
+
+We use Waffle.io for tracking our stories and progress, check it out here: https://waffle.io/mveritym/lihtcmapper  
+
 ## Tech Stack
 
 * Angular.js
