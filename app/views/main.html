@@ -7,12 +7,11 @@
 
 <section id="body">
   <div id="map-canvas"></div>
-  <form ng-controller="MapCtrl as map" ng-submit="map.codeAddress(map.address)">
-    <div>
-      <input type="text" ng-model="map.address" placeholder="Site location"></input>
+  <div id="panel-body">
+    <form novalidate name="address_form" ng-controller="MapCtrl as map" ng-submit="map.codeAddress(map.address)">
+      <input type="text" ng-model="map.address" placeholder="Site location" required></input>
       <button type="submit">Find</button>
-    </div>
-    <div id="error-message" ng-show="geocodeError">Sorry, we could not find that address. Please search for a new location.</div>
-  </form>
-  </section>
+      <div id="error-message" ng-show="(address_form.$invalid && address_form.$dirty) || geocodeError">Please enter a valid site address.</div>
+    </form>
+  </div>
 </section>
