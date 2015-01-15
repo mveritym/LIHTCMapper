@@ -9,8 +9,17 @@ angular.module('lihtcmapperApp')
     var DEFAULT_CANVAS = document.getElementById('map-canvas');
     var OAK_CITY_HALL_LAT = 37.8052754;
     var OAK_CITY_HALL_LNG = -122.2725614;
-    var DEFAULT_ZOOM = 15;
+    var DEFAULT_ZOOM = 14;
     var DEFAULT_RADIUS = 1609.34 * 0.5; // 0.5 miles in meters
+
+    var rangeCircleOptions = {
+      strokeColor: '#564280',
+      strokeOpacity: 1,
+      strokeWeight: 1,
+      fillColor: '#D6C2FF',
+      fillOpacity: 0.35,
+      radius: DEFAULT_RADIUS
+    };
 
     this.codeAddress = function (address) {
       mapService.geocode(address, function (status) {
@@ -19,10 +28,10 @@ angular.module('lihtcmapperApp')
       });
     };
 
-    this.initialize = function (canvas, lat, lng, zoom, radius) {
+    this.initialize = function (canvas, lat, lng, zoom, rangeCircleOptions) {
       var defaultCenter = { lat: lat, lng: lng };
-      mapService.initializeMap(canvas, { center: defaultCenter, zoom: zoom }, { radius: radius });
+      mapService.initializeMap(canvas, { center: defaultCenter, zoom: zoom }, rangeCircleOptions);
     };
 
-    this.initialize(DEFAULT_CANVAS, OAK_CITY_HALL_LAT, OAK_CITY_HALL_LNG, DEFAULT_ZOOM, DEFAULT_RADIUS);
+    this.initialize(DEFAULT_CANVAS, OAK_CITY_HALL_LAT, OAK_CITY_HALL_LNG, DEFAULT_ZOOM, rangeCircleOptions);
   }]);

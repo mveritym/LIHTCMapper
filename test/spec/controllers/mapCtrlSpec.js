@@ -28,10 +28,9 @@ describe('Controller: MapCtrl', function () {
 
   it('should initialize a new map', function () {
     spyOn(mapService, 'initializeMap');
-    mapCtrl.initialize(canvas, lat, lng, zoom, radius);
-    expect(mapService.initializeMap).toHaveBeenCalledWith(canvas,
-      { center: { lat: lat, lng: lng }, zoom: zoom },
-      { radius: radius });
+    var radiusOptions = { radius: radius };
+    mapCtrl.initialize(canvas, lat, lng, zoom, radiusOptions);
+    expect(mapService.initializeMap).toHaveBeenCalledWith(canvas, { center: { lat: lat, lng: lng }, zoom: zoom }, radiusOptions);
   });
 
   it('should geocode an address and set the geocode error to true', function () {
