@@ -5,7 +5,8 @@ angular
     'ngAria',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'ngSlider'
   ])
   .config(function ($routeProvider) {
     $routeProvider
