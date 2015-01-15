@@ -5,13 +5,18 @@
   <h2>Analyzing Site Feasibility for the California Tax Credit Allocation Committee (TCAC) Application</h2>
 </section>
 
-<section id="body">
+<section id="body" ng-controller="MapCtrl as map">
   <div id="map-canvas"></div>
   <div id="panel-body">
-    <form novalidate name="address_form" ng-controller="MapCtrl as map" ng-submit="map.codeAddress(map.address)">
+    <form novalidate name="address_form" ng-submit="map.codeAddress(map.address)">
       <input type="text" ng-model="map.address" placeholder="Site location" required></input>
       <button type="submit">Find</button>
-      <div id="error-message" ng-show="(address_form.$invalid && address_form.$dirty) || geocodeError">Please enter a valid site address.</div>
+      <div id="error-message" ng-show="(address_form.$invalid && address_form.$dirty) || geocodeError">
+        Please enter a valid site address.
+      </div>
     </form>
+    <div class="slider" ng-show="showSlider">
+      <slider ng-model="sliderValue" options="sliderOptions" />
+    </div>
   </div>
 </section>

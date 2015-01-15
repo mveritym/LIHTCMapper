@@ -5,6 +5,7 @@ angular.module('lihtcmapperApp')
 
     this.address = '';
     $scope.geocodeError = false;
+    $scope.showSlider = false;
 
     var DEFAULT_CANVAS = document.getElementById('map-canvas');
     var OAK_CITY_HALL_LAT = 37.8052754;
@@ -21,9 +22,19 @@ angular.module('lihtcmapperApp')
       radius: DEFAULT_RADIUS
     };
 
+    $scope.sliderValue = 5;
+    $scope.sliderOptions = {
+      from: 0,
+      to: 15,
+      step: 1,
+      dimension: ' miles',
+      floor: true
+    };
+
     this.codeAddress = function (address) {
       mapService.geocode(address, function (status) {
         $scope.geocodeError = !status;
+        $scope.showSlider = status;
         $scope.$digest();
       });
     };
