@@ -179,7 +179,8 @@ module.exports = function (grunt) {
               js: '\'{{filePath}}\','
             }
           }
-        }
+        },
+        ignorePath: /\.\.\//
       }
     },
 
@@ -455,7 +456,6 @@ module.exports = function (grunt) {
     'cdnify',
     'cssmin',
     'uglify',
-    'wiredep',
     'filerev',
     'usemin',
     'htmlmin'
