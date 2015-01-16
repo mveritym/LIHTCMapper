@@ -417,6 +417,14 @@ module.exports = function (grunt) {
     'protractor:run'
   ]);
 
+  grunt.registerTask('test:e2e', [
+    'clean:server',
+    'concurrent:test',
+    'autoprefixer',
+    'connect:test',
+    'protractor:run'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
