@@ -7,6 +7,7 @@ var MapPage = function() {
   this.address = this.form.element(by.model('map.address'));
   this.submitButton = this.form.element(by.tagName('button'));
   this.geocodeError = this.form.element(by.id('error-message'));
+  this.slider = element(by.className('slider'));
 
   function ElementPromise (selector) {
     var deferred = protractor.promise.defer();
@@ -41,6 +42,11 @@ var MapPage = function() {
       this.mapCanvas = mapCanvas;
     })
   }
+
+  this.enterValidAddress = function (validAddress) {
+    this.address.sendKeys(validAddress);
+    this.submitButton.click();
+  };
 
   this.waitForMap = function (callback) {
     waitForCanvas();
