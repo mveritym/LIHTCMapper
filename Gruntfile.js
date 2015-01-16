@@ -166,6 +166,20 @@ module.exports = function (grunt) {
       dist: {
         src: ['<%= yeoman.dist %>/index.html'],
         ignorePath: /\.\.\//
+      },
+      test: {
+        src: 'test/karma.unit.conf.js',
+        fileTypes: {
+          js: {
+            block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
+            }
+          }
+        }
       }
     },
 
