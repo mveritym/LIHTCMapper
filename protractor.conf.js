@@ -5,4 +5,5 @@ exports.config = {
   capabilities: {
     'browserName': 'firefox'
   },
+  rootElement: 'body'
 }
