@@ -168,7 +168,7 @@ module.exports = function (grunt) {
         ignorePath: /\.\.\//
       },
       test: {
-        src: 'test/karma.unit.conf.js',
+        src: 'test/karma.conf.js',
         fileTypes: {
           js: {
             block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
