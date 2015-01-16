@@ -162,6 +162,10 @@ module.exports = function (grunt) {
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
+      },
+      dist: {
+        src: ['<%= yeoman.dist %>/index.html'],
+        ignorePath: /\.\.\//
       }
     },
 
@@ -437,6 +441,7 @@ module.exports = function (grunt) {
     'cdnify',
     'cssmin',
     'uglify',
+    'wiredep',
     'filerev',
     'usemin',
     'htmlmin'
