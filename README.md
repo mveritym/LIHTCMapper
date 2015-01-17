@@ -6,7 +6,7 @@ property.
 
 ## Build Status 
 
-![Build status](https://snap-ci.com/mveritym/LIHTCMapper/branch/master/build_image)
+[![Build status](https://snap-ci.com/mveritym/LIHTCMapper/branch/master/build_image)](https://snap-ci.com/mveritym/LIHTCMapper/branch/master)
 
 ## Story Wall
 
