@@ -1,10 +1,12 @@
 LIHTCMapper
 ===========
 
-LIHTCMapper calculates the maximum tax credits a potential site could recieve if developed as a low income housing 
+LIHTCMapper calculates the maximum tax credits a potential site could recieve if developed as a low income housing
 property.
 
-## Build Status 
+## Build Status
+
+We use Snap for continuous integration. Click the build status button below for more info.
 
 [![Build status](https://snap-ci.com/mveritym/LIHTCMapper/branch/master/build_image)](https://snap-ci.com/mveritym/LIHTCMapper/branch/master)
 
@@ -26,7 +28,7 @@ We use Waffle.io for tracking our stories and progress, check it out here: https
 
 ## Getting Started
 
-To get started on this project you'll need Ruby installed on your box, if you're on Mac OSX you should already have 
+To get started on this project you'll need Ruby installed on your box, if you're on Mac OSX you should already have
 this, type the following command into your console to check you have ruby installed:
 
 ```
@@ -94,7 +96,7 @@ grunt karma
 To run your functional tests:
 
 ```
-grunt protractor:run
+grunt test:e2e
 ```
 
 To run all tests:
