@@ -33,6 +33,10 @@ angular.module('lihtcmapperApp').service('MapService', function () {
     rangeCircle.setCenter({ lat: lat, lng: lng });
   };
 
+  this.setRangeCircleRadius = function (radius) {
+    rangeCircle.setRadius(radius);
+  };
+
   this.geocode = function (address, callback) {
     var mapService = this;
     geocoder.geocode({'address': address}, function (results, status) {

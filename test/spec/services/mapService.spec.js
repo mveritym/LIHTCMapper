@@ -39,7 +39,8 @@ describe('MapService', function() {
         options: options,
         setMap: setCircleMapFn,
         getMap: getCircleMapFn,
-        setCenter: emptyFn
+        setCenter: emptyFn,
+        setRadius: emptyFn
       };
     },
     GeocoderStatus: {
@@ -174,6 +175,13 @@ describe('MapService', function() {
         spyOn(mapService.getRangeCircle(), 'setCenter');
         mapService.setRangeCirclePosition(newLat, newLng);
         expect(mapService.getRangeCircle().setCenter).toHaveBeenCalledWith({ lat: newLat, lng: newLng });
+      });
+
+      it('should set the range circle\'s radius', function () {
+        var radius = 0.5 * 1609.34; // 0.5 miles in meters
+        spyOn(mapService.getRangeCircle(), 'setRadius');
+        mapService.setRangeCircleRadius(radius);
+        expect(mapService.getRangeCircle().setRadius).toHaveBeenCalledWith(radius);
       });
     });
   });

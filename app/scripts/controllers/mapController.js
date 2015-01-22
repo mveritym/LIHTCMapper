@@ -22,14 +22,20 @@ angular.module('lihtcmapperApp')
       radius: DEFAULT_RADIUS
     };
 
-    $scope.sliderValue = 5;
-    $scope.sliderOptions = {
-      from: 0,
-      to: 15,
-      step: 1,
-      dimension: ' miles',
-      floor: true
+    $scope.sliders = {};
+    $scope.sliders.sliderValue = 0.5;
+
+    $scope.testOptions = {
+      min: 0,
+      max: 1.5,
+      step: 0.1,
+      tooltip: 'hide'
     };
+
+    $scope.$watch('sliders.sliderValue', function(rangeInMiles) {
+      mapService.setRangeCircleRadius(rangeInMiles * 1609.34);
+    });
+
 
     this.codeAddress = function (address) {
       mapService.geocode(address, function (status) {

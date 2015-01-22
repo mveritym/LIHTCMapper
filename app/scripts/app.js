@@ -6,7 +6,7 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngSlider'
+    'ui.bootstrap-slider'
   ])
   .config(function ($routeProvider) {
     $routeProvider

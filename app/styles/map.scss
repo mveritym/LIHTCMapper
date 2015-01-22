@@ -55,12 +55,12 @@
         }
       }
 
-      .slider {
-        width: 91%;
+      .slider-container {
+        width: 87%;
         margin-top: 30px;
 
-        .jslider-label, .jslider-value {
-          display: none;
+        .slider {
+          width: 100%;
         }
       }
     }
