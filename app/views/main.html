@@ -18,6 +18,7 @@
     <div class="slider-container" ng-show="showSlider" ng-controller="SliderCtrl as slider">
       <slider ng-model="slider.value" min="{{slider.options.min}}" step="{{slider.options.step}}" max="{{slider.options.max}}"
         tooltip="{{slider.options.tooltip}}"></slider>
+      <label>Distance to amenities: <span>{{slider.value | number:1 }} miles</span></label>
     </div>
   </div>
 </section>

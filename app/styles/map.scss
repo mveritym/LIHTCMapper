@@ -62,6 +62,17 @@
         .slider {
           width: 100%;
         }
+
+        label {
+          padding-top: 10px;
+          text-align: center;
+          font-size: 16px;
+          font-weight: normal;
+
+          span {
+            font-weight: bold;
+          }
+        }
       }
     }
   }

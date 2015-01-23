@@ -8,6 +8,7 @@ var MapPage = function() {
   this.submitButton = this.form.element(by.tagName('button'));
   this.geocodeError = this.form.element(by.id('error-message'));
   this.slider = element(by.className('slider'));
+  this.sliderLabel = element(by.className('slider-container')).element(by.tagName('label'));
 
   function ElementPromise (selector) {
     var deferred = protractor.promise.defer();

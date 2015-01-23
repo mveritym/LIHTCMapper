@@ -41,9 +41,10 @@ describe('Map page', function () {
       mapPage.enterValidAddress('1 Frank H. Ogawa Plaza, Oakland, California 94612');
     });
 
-    it('should show the range slider', function () {
+    it('should show the range slider and distance label', function () {
       browser.wait(mapPage.slider.isDisplayed, 2000);
       expect(mapPage.slider.isDisplayed()).toBeTruthy();
+      expect(mapPage.sliderLabel.isDisplayed()).toBeTruthy();
     });
 
     it('should not show an error message', function () {
