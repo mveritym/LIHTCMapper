@@ -15,10 +15,9 @@
         Please enter a valid site address.
       </div>
     </form>
-    <div class="slider-container" ng-show="showSlider">
-      <slider ng-model="sliders.sliderValue" min="{{testOptions.min}}" step="{{testOptions.step}}" max="{{testOptions.max}}"
-        tooltip="{{testOptions.tooltip}}"></slider>
+    <div class="slider-container" ng-show="showSlider" ng-controller="SliderCtrl as slider">
+      <slider ng-model="slider.value" min="{{slider.options.min}}" step="{{slider.options.step}}" max="{{slider.options.max}}"
+        tooltip="{{slider.options.tooltip}}"></slider>
     </div>
-    {{sliders.sliderValue}}
   </div>
 </section>
