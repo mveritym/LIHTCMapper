@@ -1,88 +1,93 @@
 /*global google */
 'use strict';
 
-angular.module('lihtcmapperApp').service('MapService', function () {
+angular.module('lihtcmapperApp').service('MapService', ['$q', function ($q) {
 
-  var gmaps, geocoder, map, marker, rangeCircle;
+    var gmaps, geocoder, map, marker, rangeCircle;
 
-  this.initializeMap = function (canvas, mapOptions, rangeCircleOptions) {
-    gmaps = this.api();
-    map = new gmaps.Map(canvas, mapOptions);
-    geocoder = new gmaps.Geocoder();
-    marker = new gmaps.Marker();
-    rangeCircle = new gmaps.Circle(rangeCircleOptions);
-    this.clearMap();
-    this.placeOnMap();
-  };
+    this.initializeMap = function (canvas, mapOptions, rangeCircleOptions) {
+        var deferred = $q.defer();
 
-  this.setMapCenter = function (lat, lng) {
-    var newLocation = new gmaps.LatLng(lat, lng);
-    map.setCenter(newLocation);
-  };
+        gmaps = this.api();
+        map = new gmaps.Map(canvas, mapOptions);
+        geocoder = new gmaps.Geocoder();
+        marker = new gmaps.Marker();
+        rangeCircle = new gmaps.Circle(rangeCircleOptions);
+        this.clearMap();
+        this.placeOnMap();
 
-  this.clearMap = function () {
-    marker.setMap(null);
-    rangeCircle.setMap(null);
-  };
+        deferred.resolve(map);
+        return deferred.promise;
+    };
 
-  this.setMarkerPosition = function (lat, lng) {
-    marker.setPosition({ lat: lat, lng: lng });
-  };
+    this.setMapCenter = function (lat, lng) {
+        var newLocation = new gmaps.LatLng(lat, lng);
+        map.setCenter(newLocation);
+    };
 
-  this.setRangeCirclePosition = function (lat, lng) {
-    rangeCircle.setCenter({ lat: lat, lng: lng });
-  };
+    this.clearMap = function () {
+        marker.setMap(null);
+        rangeCircle.setMap(null);
+    };
 
-  this.setRangeCircleRadius = function (radius) {
-    rangeCircle.setRadius(radius);
-  };
+    this.setMarkerPosition = function (lat, lng) {
+        marker.setPosition({ lat: lat, lng: lng });
+    };
 
-  this.geocode = function (address, callback) {
-    var mapService = this;
-    geocoder.geocode({'address': address}, function (results, status) {
-      mapService.parseGeocodeResults(results, status);
-      callback(status === gmaps.GeocoderStatus.OK);
-    });
-  };
+    this.setRangeCirclePosition = function (lat, lng) {
+        rangeCircle.setCenter({ lat: lat, lng: lng });
+    };
 
-  this.parseGeocodeResults = function (results, status) {
-    if (status === gmaps.GeocoderStatus.OK) {
-      var location = results[0].geometry.location;
-      this.setMapCenter(location.lat(), location.lng());
-      this.setMarkerPosition(location.lat(), location.lng());
-      this.setRangeCirclePosition(location.lat(), location.lng());
-      this.placeOnMap();
-    } else {
-      this.clearMap();
-    }
-  };
+    this.setRangeCircleRadius = function (radius) {
+        rangeCircle.setRadius(radius);
+    };
 
-  this.placeOnMap = function () {
-    if (marker.getMap() === null && rangeCircle.getMap() === null) {
-      marker.setMap(map);
-      rangeCircle.setMap(map);
-    }
-  };
+    this.geocode = function (address, callback) {
+        var mapService = this;
+        geocoder.geocode({'address': address}, function (results, status) {
+            mapService.parseGeocodeResults(results, status);
+            callback(status === gmaps.GeocoderStatus.OK);
+        });
+    };
 
-  this.api = function () {
-    return google.maps;
-  };
+    this.parseGeocodeResults = function (results, status) {
+        if (status === gmaps.GeocoderStatus.OK) {
+            var location = results[0].geometry.location;
+            this.setMapCenter(location.lat(), location.lng());
+            this.setMarkerPosition(location.lat(), location.lng());
+            this.setRangeCirclePosition(location.lat(), location.lng());
+            this.placeOnMap();
+        } else {
+            this.clearMap();
+        }
+    };
 
-  // Getters & Setters - refactor later??
+    this.placeOnMap = function () {
+        if (marker.getMap() === null && rangeCircle.getMap() === null) {
+            marker.setMap(map);
+            rangeCircle.setMap(map);
+        }
+    };
 
-  this.getGeocoder = function () {
-    return geocoder;
-  };
+    this.api = function () {
+        return google.maps;
+    };
 
-  this.getMap = function () {
-    return map;
-  };
+    // Getters & Setters - refactor later??
 
-  this.getMarker = function () {
-    return marker;
-  };
+    this.getGeocoder = function () {
+        return geocoder;
+    };
 
-  this.getRangeCircle = function () {
-    return rangeCircle;
-  };
-});
+    this.getMap = function () {
+        return map;
+    };
+
+    this.getMarker = function () {
+        return marker;
+    };
+
+    this.getRangeCircle = function () {
+        return rangeCircle;
+    };
+}]);

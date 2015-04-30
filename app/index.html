@@ -38,8 +38,10 @@
        ga('send', 'pageview');
     </script>
 
-    <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmnlLaA0eDenGrePhHSONG0HzgXpYsb6c"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+    <!--<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmnlLaA0eDenGrePhHSONG0HzgXpYsb6c"></script>-->
 
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
@@ -61,6 +63,7 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
     <script src="bower_components/angular-bootstrap-slider/slider.js"></script>
+    <script src="bower_components/angularjs-google-places/dist/angularjs-google-places.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -68,6 +71,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/services/mapService.js"></script>
+    <script src="scripts/services/placesService.js"></script>
     <script src="scripts/controllers/mapController.js"></script>
     <script src="scripts/controllers/sliderController.js"></script>
     <!-- endbuild -->

@@ -1,78 +1,61 @@
 @import "compass/css3";
 
-
-  #header {
-
-    width: 100%;
-    margin-bottom: 40px;
-    text-align: center;
-    font-family: Calibri, sans-serif;
-    color: #004937;
-
-    h1 {
-      margin-bottom: 0px;
-      font-size: 30px;
-    }
-
-    h2 {
-      margin-top: 10px;
-      font-size: 22px;
-      font-style: italic;
-    }
+  // Standard components
+  label {
+      padding-top: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: normal;
   }
 
-  #body {
+  button {
+    margin-left: 5px;
+    padding: 5px 15px 5px 15px;
+    font-size: 14px;
+  }
 
-    width: 90%;
-    margin: auto;
+  input[type="text"] {
+    width: 65%;
+    padding: 5px 10px 5px 10px;
+    font-size: 16px;
+  }
 
-    #map-canvas {
-      float: right;
-      height: 550px;
-      width: 62%;
-    }
+  input[type="checkbox"] {
+      margin: 5px;
+  }
 
-    #panel-body {
-      width: 35%;
-      padding: 15px;
+  #map-canvas {        // NEEDS TO BE AN ID FOR GMAPS TO HANDLE IT
+    height: 550px;
+    width: 62%;
+  }
 
-      form {
-        input {
-          width: 65%;
-          padding: 5px 10px 5px 10px;
-          font-size: 16px;
-        }
+  // Text formatting
+  .emphasized { font-weight: bold; }
+  .italicized { font-style: italic; }
+  .error { color: red; }
+  .h1-font { font-size: 30px; }
+  .h2-font { font-size: 22px; }
+  .centered { text-align: center; }
 
-        button {
-          margin-left: 5px;
-          padding: 5px 15px 5px 15px;
-          font-size: 14px;
-        }
+  // Panel and section formatting
+  .margin-auto { margin: auto; }
+  .margin-top-large { margin-top: 30px; }
+  .margin-top-medium { margin-top: 20px; }
+  .margin-top-small { margin-top: 10px; }
+  .margin-bottom-none { margin-bottom: 0px; }
+  .margin-bottom-large { margin-bottom: 40px; }
 
-        #error-message {
-          padding-top: 10px;
-          color: red;
-        }
-      }
+  .padding-medium { padding: 15px; }
 
-      .slider-container {
-        width: 87%;
-        margin-top: 30px;
+  .slider-horizontal, .full-width { width: 100% !important; }
+  .body-width { width: 90%; }
+  .panel-section { width: 87%; }
+  .side-panel-width { width: 35%; }
 
-        .slider {
-          width: 100%;
-        }
+  .float-right { float: right; }
 
-        label {
-          padding-top: 10px;
-          text-align: center;
-          font-size: 16px;
-          font-weight: normal;
-
-          span {
-            font-weight: bold;
-          }
-        }
-      }
-    }
+  // Defaults
+  body {
+      font-family: Calibri, sans-serif;
+      color: #004937;
   }

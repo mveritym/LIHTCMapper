@@ -6,7 +6,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ui.bootstrap-slider'
+    'ui.bootstrap-slider',
+    'ngGPlaces'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -17,4 +18,9 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  .config(function (ngGPlacesAPIProvider){
+    ngGPlacesAPIProvider.setDefaults({
+      radius:500
+    });
+});

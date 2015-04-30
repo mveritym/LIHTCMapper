@@ -1,24 +1,35 @@
 <!--<link rel="stylesheet" href="styles/map.css">-->
 
-<section id="header">
-  <h1>Mapping Site Amenities: A Tool for Affordable Housing Developers in California</h1>
-  <h2>Analyzing Site Feasibility for the California Tax Credit Allocation Committee (TCAC) Application</h2>
+<section class="full-width margin-bottom-large">
+    <div class="h1-font margin-bottom-none centered">Mapping Site Amenities: A Tool for Affordable Housing Developers in California</div>
+    <div class="h2-font margin-top-small italicized centered">Analyzing Site Feasibility for the California Tax Credit Allocation Committee (TCAC) Application</div>
 </section>
 
-<section id="body" ng-controller="MapCtrl as map">
-  <div id="map-canvas"></div>
-  <div id="panel-body">
-    <form novalidate name="address_form" ng-submit="map.codeAddress(map.address)">
-      <input type="text" ng-model="map.address" placeholder="Site location" required></input>
-      <button type="submit">Find</button>
-      <div id="error-message" ng-show="(address_form.$invalid && address_form.$dirty) || geocodeError">
-        Please enter a valid site address.
-      </div>
-    </form>
-    <div class="slider-container" ng-show="showSlider" ng-controller="SliderCtrl as slider">
-      <slider ng-model="slider.value" min="{{slider.options.min}}" step="{{slider.options.step}}" max="{{slider.options.max}}"
-        tooltip="{{slider.options.tooltip}}"></slider>
-      <label>Distance to amenities: <span>{{slider.value | number:1 }} miles</span></label>
+<section class="body-width margin-auto" ng-controller="MapCtrl as map">
+    <div id="map-canvas" class="float-right"></div>
+    <div class="side-panel-width padding-medium">
+        <form novalidate name="address_form" ng-submit="map.codeAddress(map.address)">
+            <input type="text" ng-model="map.address" placeholder="Site location" required></input>
+            <button type="submit">Find</button>
+            <label class="error" ng-show="(address_form.$invalid && address_form.$dirty) || geocodeError">
+                Please enter a valid site address.
+            </label>
+        </form>
+        <div class="panel-section margin-top-large" ng-show="showSlider" ng-controller="SliderCtrl as slider">
+            <slider ng-model="slider.value" min="{{slider.options.min}}" step="{{slider.options.step}}" max="{{slider.options.max}}"
+                tooltip="{{slider.options.tooltip}}"></slider>
+            <label>Distance to amenities: <span class="emphasized">{{slider.value | number:1 }} miles</span></label>
+        </div>
+        <div class="panel-section margin-top-medium" ng-show="showSlider">
+            <input type="checkbox" ng-click="map.placeSearch('pharmacy', pharmacyChecked)" ng-model="pharmacyChecked">
+                <label>Pharmacies</label>
+            </br>
+            <input type="checkbox" ng-click="map.placeSearch('school', schoolChecked)" ng-model="schoolChecked">
+                <label>Schools</label>
+            </br>
+            <input type="checkbox" ng-click="map.placeSearch('hospital', hospitalChecked)" ng-model="hospitalChecked">
+                <label>Hospitals</label>
+            </br>
+        </div>
     </div>
-  </div>
 </section>
